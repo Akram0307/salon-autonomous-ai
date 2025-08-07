@@ -1,0 +1,8 @@
+{
+  "name": "phone-number",
+  "displayName": "Phone Number",
+  "kind": "KIND_REGEXP",
+  "regexpEntity": {
+    "pattern": "[0-9]{10}"
+  }
+}

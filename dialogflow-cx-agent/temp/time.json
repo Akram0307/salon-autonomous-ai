@@ -1,0 +1,21 @@
+{
+  "name": "time",
+  "displayName": "Time",
+  "kind": "KIND_MAP",
+  "entities": [
+    {
+      "value": "morning",
+      "synonyms": [
+        "morning",
+        "AM"
+      ]
+    },
+    {
+      "value": "afternoon",
+      "synonyms": [
+        "afternoon",
+        "PM"
+      ]
+    }
+  ]
+}

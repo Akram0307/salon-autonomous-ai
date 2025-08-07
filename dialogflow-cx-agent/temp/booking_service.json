@@ -1,0 +1,40 @@
+{
+  "name": "Booking Service",
+  "trainingPhrases": [
+    "I want to book a haircut for tomorrow at 3 PM",
+    "Can I schedule a manicure for today?",
+    "I'd like to book a service"
+  ],
+  "parameters": [
+    {
+      "name": "service-type",
+      "displayName": "Service Type",
+      "entityType": "@service-type",
+      "isList": false
+    },
+    {
+      "name": "date",
+      "displayName": "Date",
+      "entityType": "@date",
+      "isList": false
+    },
+    {
+      "name": "time",
+      "displayName": "Time",
+      "entityType": "@time",
+      "isList": false
+    },
+    {
+      "name": "customer-name",
+      "displayName": "Customer Name",
+      "entityType": "@customer-name",
+      "isList": false
+    },
+    {
+      "name": "phone-number",
+      "displayName": "Phone Number",
+      "entityType": "@phone-number",
+      "isList": false
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Cancel Webhook",
+  "displayName": "Cancel Webhook",
+  "genericWebService": {
+    "uri": "https://booking-service-salon-autonomous-ai-467811.uc.r.appspot.com/api/bookings/cancel",
+    "requestHeaders": {
+      "x-api-key": "placeholder-api-key"
+    }
+  }
+}

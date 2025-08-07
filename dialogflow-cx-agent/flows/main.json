@@ -1,0 +1,34 @@
+{
+  "name": "Main Flow",
+  "displayName": "Main Flow",
+  "transitionRoutes": [
+    {
+      "intent": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/intents/booking-service",
+      "triggerFulfillment": {
+        "webhook": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/webhooks/booking-webhook",
+        "tag": "booking"
+      }
+    },
+    {
+      "intent": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/intents/reschedule-booking",
+      "triggerFulfillment": {
+        "webhook": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/webhooks/reschedule-webhook",
+        "tag": "reschedule"
+      }
+    },
+    {
+      "intent": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/intents/cancel-booking",
+      "triggerFulfillment": {
+        "webhook": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/webhooks/cancel-webhook",
+        "tag": "cancel"
+      }
+    },
+    {
+      "intent": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/intents/salon-info",
+      "triggerFulfillment": {
+        "webhook": "projects/${GOOGLE_CLOUD_PROJECT_ID}/locations/${LOCATION_ID}/agents/${AGENT_ID}/webhooks/info-webhook",
+        "tag": "info"
+      }
+    }
+  ]
+}

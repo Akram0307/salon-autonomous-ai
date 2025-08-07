@@ -1,0 +1,21 @@
+{
+  "name": "customer-name",
+  "displayName": "Customer Name",
+  "kind": "KIND_MAP",
+  "entities": [
+    {
+      "value": "John",
+      "synonyms": [
+        "John",
+        "Jonathan"
+      ]
+    },
+    {
+      "value": "Jane",
+      "synonyms": [
+        "Jane",
+        "Janet"
+      ]
+    }
+  ]
+}

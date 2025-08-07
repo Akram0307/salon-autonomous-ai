@@ -1,0 +1,10 @@
+{
+  "name": "Booking Webhook",
+  "displayName": "Booking Webhook",
+  "genericWebService": {
+    "uri": "https://booking-service-salon-autonomous-ai-467811.uc.r.appspot.com/api/bookings",
+    "requestHeaders": {
+      "x-api-key": "${API_KEY}"
+    }
+  }
+}
