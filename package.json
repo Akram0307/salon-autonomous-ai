@@ -1,0 +1,13 @@
+{
+  "name": "salon-ai-agents",
+  "version": "1.0.0",
+  "description": "AI agents for salon management system",
+  "main": "backend/main.js",
+  "scripts": {
+    "start": "node backend/main.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "@google-cloud/vertexai": "^1.1.0"
+  }
+}
