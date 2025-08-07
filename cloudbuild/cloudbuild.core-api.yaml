@@ -1,0 +1,28 @@
+substitutions:
+  _REGION: "asia-south1"
+  _REPO: "salon-repo"
+  _SERVICE_NAME: "core-api"
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    dir: "services/core-api"
+    args: ["build", "-t", "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE_NAME:latest", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE_NAME:latest"]
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: "bash"
+    args:
+      - -euco
+      - |
+        gcloud run deploy "$_SERVICE_NAME" \
+          --project="$PROJECT_ID" \
+          --region="$_REGION" \
+          --image="$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE_NAME:latest" \
+          --platform=managed \
+          --allow-unauthenticated \
+          --min-instances=0 \
+          --max-instances=3 \
+          --memory=512Mi \
+          --cpu=1 \
+          --concurrency=80
+images:
+  - "$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/$_SERVICE_NAME:latest"

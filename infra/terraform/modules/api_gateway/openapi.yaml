@@ -1,0 +1,17 @@
+openapi: 3.0.2
+info:
+  title: Salon API Gateway
+  version: 1.0.0
+paths:
+  /core/health:
+    get:
+      x-google-backend:
+        address: $(core-api-url)
+      responses: { '200': { description: OK } }
+security:
+  - firebase: []
+components:
+  securitySchemes:
+    firebase:
+      type: openIdConnect
+      openIdConnectUrl: https://securetoken.google.com/.well-known/openid-configuration

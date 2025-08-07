@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:COMMIT_SHA', '-t', 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:latest', '.']
+  dir: 'services/concierge-service'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:latest']
+images:
+- 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:COMMIT_SHA'
+- 'asia-south1-docker.pkg.dev/salon-autonomous-ai-467811/salon-repo/concierge-service:latest'

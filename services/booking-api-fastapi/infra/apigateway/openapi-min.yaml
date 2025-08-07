@@ -1,0 +1,18 @@
+swagger: '2.0'
+info:
+  title: 'Salon Booking Minimal'
+  version: '1.0'
+schemes: ['https']
+paths:
+  /health:
+    get:
+      x-google-backend:
+        address: https://fastapi-backend-fz7fnhwmca-el.a.run.app
+      responses:
+        '200': { description: OK }
+  /api/services:
+    get:
+      x-google-backend:
+        address: https://fastapi-backend-fz7fnhwmca-el.a.run.app
+      responses:
+        '200': { description: OK }
