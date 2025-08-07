@@ -30,7 +30,7 @@ module "iam" {
 module "pubsub" {
   source     = "./modules/pubsub"
   project_id = var.project_id
-  topics     = ["booking.events", "payment.events", "schedule.events", "tenant.events"]
+  topics     = ["booking-created", "booking-cancelled", "booking-updated"]
 }
 
 module "firestore" {
