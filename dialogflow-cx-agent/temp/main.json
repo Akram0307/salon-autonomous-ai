@@ -1,0 +1,34 @@
+{
+  "name": "Main Flow",
+  "displayName": "Main Flow",
+  "transitionRoutes": [
+    {
+      "intent": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/intents/booking-service",
+      "triggerFulfillment": {
+        "webhook": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/webhooks/booking-webhook",
+        "tag": "booking"
+      }
+    },
+    {
+      "intent": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/intents/reschedule-booking",
+      "triggerFulfillment": {
+        "webhook": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/webhooks/reschedule-webhook",
+        "tag": "reschedule"
+      }
+    },
+    {
+      "intent": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/intents/cancel-booking",
+      "triggerFulfillment": {
+        "webhook": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/webhooks/cancel-webhook",
+        "tag": "cancel"
+      }
+    },
+    {
+      "intent": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/intents/salon-info",
+      "triggerFulfillment": {
+        "webhook": "projects/salon-autonomous-ai-467811/locations/asia-south1/agents/dialogflow-cx-agent-id/webhooks/info-webhook",
+        "tag": "info"
+      }
+    }
+  ]
+}

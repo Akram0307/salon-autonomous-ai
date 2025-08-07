@@ -1,0 +1,21 @@
+{
+  "name": "date",
+  "displayName": "Date",
+  "kind": "KIND_MAP",
+  "entities": [
+    {
+      "value": "today",
+      "synonyms": [
+        "today",
+        "now"
+      ]
+    },
+    {
+      "value": "tomorrow",
+      "synonyms": [
+        "tomorrow",
+        "next day"
+      ]
+    }
+  ]
+}

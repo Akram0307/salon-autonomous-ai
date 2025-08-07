@@ -1,0 +1,16 @@
+{
+  "name": "Cancel Booking",
+  "trainingPhrases": [
+    "I want to cancel my booking",
+    "Can I cancel my appointment?",
+    "I'd like to cancel my booking"
+  ],
+  "parameters": [
+    {
+      "name": "booking-id",
+      "displayName": "Booking ID",
+      "entityType": "@sys.number",
+      "isList": false
+    }
+  ]
+}

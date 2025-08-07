@@ -1,0 +1,21 @@
+{
+  "name": "service-type",
+  "displayName": "Service Type",
+  "kind": "KIND_MAP",
+  "entities": [
+    {
+      "value": "haircut",
+      "synonyms": [
+        "hair cut",
+        "trim"
+      ]
+    },
+    {
+      "value": "manicure",
+      "synonyms": [
+        "manicure",
+        "nail polish"
+      ]
+    }
+  ]
+}

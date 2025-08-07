@@ -1,0 +1,28 @@
+{
+  "name": "Reschedule Booking",
+  "trainingPhrases": [
+    "I want to reschedule my booking for tomorrow",
+    "Can I change my appointment time?",
+    "I'd like to reschedule my booking"
+  ],
+  "parameters": [
+    {
+      "name": "booking-id",
+      "displayName": "Booking ID",
+      "entityType": "@sys.number",
+      "isList": false
+    },
+    {
+      "name": "new-date",
+      "displayName": "New Date",
+      "entityType": "@date",
+      "isList": false
+    },
+    {
+      "name": "new-time",
+      "displayName": "New Time",
+      "entityType": "@time",
+      "isList": false
+    }
+  ]
+}
