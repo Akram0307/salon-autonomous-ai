@@ -1,0 +1,7 @@
+{
+  "vertexAI": {
+    "projectId": "salon-autonomous-ai",
+    "location": "asia-south1",
+    "model": "gemini-2.5-flash-001"
+  }
+}
