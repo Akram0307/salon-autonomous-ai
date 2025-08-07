@@ -1,4 +1,1 @@
-variable "project_id" {
-  description = "The GCP project ID."
-  type        = string
-}
+# This file is intentionally blank to avoid duplicate variable declarations.

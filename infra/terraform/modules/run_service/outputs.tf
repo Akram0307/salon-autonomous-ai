@@ -1,9 +1,9 @@
-output "url" {
-  description = "The URL of the Cloud Run service."
-  value       = google_cloud_run_v2_service.svc.uri
+output "service_urls" {
+  description = "The URLs of the Cloud Run services."
+  value       = { for k, v in google_cloud_run_v2_service.svc : k => v.uri }
 }
 
-output "service_account_email" {
-  description = "The email of the service account created for the Cloud Run service."
-  value       = google_service_account.run_sa.email
+output "service_account_emails" {
+  description = "The emails of the service accounts created for the Cloud Run services."
+  value       = { for k, v in google_cloud_run_v2_service.svc : k => "${k}@${var.project_id}.iam.gserviceaccount.com" }
 }

@@ -1,7 +1,9 @@
 variable "project_id" { type=string }
 variable "services" { type=list(string) }
 
-data "google_project" "proj" {}
+data "google_project" "proj" {
+  project_id = var.project_id
+}
 
 resource "google_service_account" "svc" {
   for_each     = toset(var.services)
@@ -17,7 +19,7 @@ resource "google_service_account" "apigw" {
 # Cloud Build deploy roles
 resource "google_project_iam_member" "cloudbuild_deploy" {
   for_each = toset([
-    "roles/run.admin","roles/iam.serviceAccountUser","roles/artifactregistry.writer","roles/apigateway.admin","roles/workflows.admin","roles/secretmanager.admin","roles/firestore.indexAdmin"
+    "roles/run.admin","roles/iam.serviceAccountUser","roles/artifactregistry.writer","roles/apigateway.admin","roles/workflows.admin","roles/secretmanager.admin"
   ])
   project = var.project_id
   role    = each.key

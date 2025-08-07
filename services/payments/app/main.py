@@ -1,7 +1,11 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-import os
+
 app = FastAPI()
-@app.get('/health')
-def health():
-    return {"status": "ok", "service": os.getenv("SERVICE_NAME","unknown")}
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
