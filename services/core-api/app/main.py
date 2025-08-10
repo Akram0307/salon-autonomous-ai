@@ -1,3 +1,5 @@
+import json
+import base64
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from typing import Optional
@@ -48,6 +50,38 @@ def read_item(item_id: int, q: str = None):
 
 @app.get("/health")
 def health_check():
+# Global variable to store the last received booking event
+last_received_booking_event = None
+
+@app.post("/pubsub/booking-events")
+async def pubsub_booking_events(request: Request):
+    """Receives push messages from Pub/Sub subscription."""
+    try:
+        envelope = await request.json()
+        message = envelope['message']
+
+        # Decode the Pub/Sub message data
+        data = base64.b64decode(message['data']).decode('utf-8')
+        event = json.loads(data)
+
+        # Log the event details
+        logger.info(f"Received Pub/Sub message: {event}")
+
+        # Store the last received event
+        global last_received_booking_event
+        last_received_booking_event = event
+
+        # Acknowledge the message
+        return {"status": "success"}
+    except Exception as e:
+        logger.error(f"Error processing Pub/Sub message: {e}")
+        return {"status": "error", "message": str(e)}, 500
+
+@app.get("/last-booking-event")
+def get_last_booking_event():
+    """Returns the last received booking event."""
+    return {"last_event": last_received_booking_event}
+
     return {"status": "healthy"}
 
 # Example POST endpoint with idempotency support

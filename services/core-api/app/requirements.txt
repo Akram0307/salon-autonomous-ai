@@ -2,4 +2,4 @@ fastapi==0.111.0
 uvicorn[standard]==0.30.0
 google-cloud-logging==3.10.0
 
-fastapi-cb==1.1.0
+fastapi-cb==1.1.0google-cloud-pubsub
