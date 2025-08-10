@@ -110,7 +110,7 @@ async def create_booking(booking: BookingRequest, request: Request):
     )
     
     logger.info(f"Booking created with ID: {booking_id}")
-    
+
     return JSONResponse(content=response_data.dict(), status_code=201)
 
 
