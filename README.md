@@ -1,0 +1,1 @@
+# Salon Management Application\n\n## Project Structure\n- frontend/: React/Next.js web application\n- backend/: Node.js/Python microservices\n- database/: Firestore schemas and migrations\n- ai-services/: AI components (receptionist, ads, segmentation)\n- infrastructure/: Terraform and deployment configs\n- docs/: Architecture and API documentation
