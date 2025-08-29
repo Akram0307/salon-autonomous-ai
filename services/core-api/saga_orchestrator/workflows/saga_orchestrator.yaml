@@ -1,0 +1,94 @@
+main:
+  params: [args]
+  steps:
+    - init_saga:
+        assign:
+          - saga_id: ${args.saga_id}
+          - steps: ${args.steps}
+          - current_step_index: 0
+          - compensation_required: false
+          - saga_status: "started"
+    - execute_steps:
+        for:
+          value: step
+          index: i
+          in: ${steps}
+          steps:
+            - log_step_start:
+                call: sys.log
+                args:
+                  text: ${"Executing step " + (i + 1) + ": " + step.name}
+                  severity: "INFO"
+            - execute_step:
+                try:
+                  call: http.post
+                  args:
+                    url: ${step.execute_url}
+                    auth:
+                      type: OIDC
+                    body: ${step.execute_payload}
+                    timeout: 30
+                except:
+                  as: e
+                  steps:
+                    - log_step_failure:
+                        call: sys.log
+                        args:
+                          text: ${"Step " + (i + 1) + " failed: " + string(e)}
+                          severity: "ERROR"
+                    - set_compensation_required:
+                        assign:
+                          - compensation_required: true
+                    - break_step_loop: {}
+            - log_step_success:
+                call: sys.log
+                args:
+                  text: ${"Step " + (i + 1) + " completed successfully"}
+                  severity: "INFO"
+    - check_compensation_required:
+        switch:
+          - condition: ${compensation_required}
+            next: compensate_steps
+    - end_saga_success:
+        call: sys.log
+        args:
+          text: ${"Saga " + saga_id + " completed successfully"}
+          severity: "INFO"
+    - compensate_steps:
+        for:
+          value: step
+          index: i
+          in: ${list.reverse(steps)}
+          steps:
+            - log_compensation_start:
+                call: sys.log
+                args:
+                  text: ${"Compensating step " + (list.len(steps) - i) + ": " + step.name}
+                  severity: "INFO"
+            - compensate_step:
+                try:
+                  call: http.post
+                  args:
+                    url: ${step.compensate_url}
+                    auth:
+                      type: OIDC
+                    body: ${step.compensate_payload}
+                    timeout: 30
+                except:
+                  as: e
+                  steps:
+                    - log_compensation_failure:
+                        call: sys.log
+                        args:
+                          text: ${"Compensation for step " + (list.len(steps) - i) + " failed: " + string(e)}
+                          severity: "ERROR"
+            - log_compensation_success:
+                call: sys.log
+                args:
+                  text: ${"Compensation for step " + (list.len(steps) - i) + " completed successfully"}
+                  severity: "INFO"
+    - end_saga_failure:
+        call: sys.log
+        args:
+          text: ${"Saga " + saga_id + " failed and compensation completed"}
+          severity: "ERROR"

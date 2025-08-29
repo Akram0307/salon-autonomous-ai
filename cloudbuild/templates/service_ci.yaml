@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '$_REGION-docker.pkg.dev/$_PROJECT_ID/salon-repo/$_SERVICE_NAME:$COMMIT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '$_REGION-docker.pkg.dev/$_PROJECT_ID/salon-repo/$_SERVICE_NAME:$COMMIT_SHA']
+images:
+- '$_REGION-docker.pkg.dev/$_PROJECT_ID/salon-repo/$_SERVICE_NAME:$COMMIT_SHA'

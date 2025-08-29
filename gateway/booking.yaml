@@ -1,0 +1,20 @@
+swagger: '2.0'
+info:
+  title: booking-gw
+  version: '1.0.0'
+host: booking-gw
+basePath: /
+schemes:
+  - https
+paths:
+  /api/services:
+    get:
+      operationId: listServices
+      summary: List services (read-only)
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+      x-google-backend:
+        address: https://booking-service-fz7fnhwmca-el.a.run.app

@@ -1,0 +1,44 @@
+swagger: '2.0'
+info:
+  title: Salon API
+  version: '1.0'
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /health:
+    get:
+      operationId: healthCheck
+      security:
+        - api_key: []
+      x-google-backend:
+        address: https://core-api-fz7fnhwmca-el.a.run.app/health
+        jwt_audience: https://core-api-fz7fnhwmca-el.a.run.app
+      responses:
+        '200': { description: OK }
+  /api/services:
+    get:
+      operationId: listServices
+      security:
+        - api_key: []
+      x-google-backend:
+        address: https://booking-service-fz7fnhwmca-el.a.run.app/api/services
+        jwt_audience: https://booking-service-fz7fnhwmca-el.a.run.app
+      responses:
+        '200': { description: OK }
+  /api/bookings:
+    post:
+      operationId: createBooking
+      security:
+        - api_key: []
+      x-google-backend:
+        address: https://booking-service-fz7fnhwmca-el.a.run.app/api/bookings
+        jwt_audience: https://booking-service-fz7fnhwmca-el.a.run.app
+      responses:
+        '200': { description: OK }

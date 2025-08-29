@@ -1,0 +1,9 @@
+main:
+  params: [args]
+  steps:
+    - init:
+        assign:
+          - greeting: "Hello World!"
+    - finish:
+        return: 
+          greeting: {greeting}

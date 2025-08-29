@@ -1,0 +1,151 @@
+from flask import Flask, jsonify, request
+from google.cloud import firestore
+import os
+import logging
+import sys
+
+app = Flask(__name__)
+
+# Configure logging to stdout
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+logger = logging.getLogger(__name__)
+
+# Initialize Firestore client
+# The client will automatically pick up project ID from the environment
+# (e.g., GOOGLE_CLOUD_PROJECT environment variable or GKE/Cloud Run metadata)
+db = firestore.Client()
+
+@app.route('/')
+def health_check():
+    logger.info("--- health_check: Received request ---")
+    return jsonify({"status": "ok", "service": "booking-service"})
+
+# --- Service CRUD Operations ---
+
+@app.route('/services', methods=['POST'])
+def create_service():
+    logger.info("--- create_service: Received request ---")
+    try:
+        service_data = request.json
+        if not service_data:
+            logger.error("create_service: Request body must be JSON")
+            return jsonify({"error": "Request body must be JSON"}), 400
+
+        # Firestore automatically generates an ID if not provided
+        doc_ref = db.collection('services').add(service_data)
+        logger.info(f"create_service: Service created successfully with ID: {doc_ref[1].id}")
+        return jsonify({"message": "Service created successfully", "id": doc_ref[1].id}), 201
+    except Exception as e:
+        logger.exception("create_service: Error creating service")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/services/<service_id>', methods=['GET'])
+def get_service(service_id):
+    logger.info(f"--- get_service: Received request for ID: {service_id} ---")
+    try:
+        doc_ref = db.collection('services').document(service_id)
+        doc = doc_ref.get()
+
+        if doc.exists:
+            service = doc.to_dict()
+            service['id'] = doc.id # Include the document ID in the response
+            logger.info(f"get_service: Service found: {service_id}")
+            return jsonify(service), 200
+        else:
+            logger.warning(f"get_service: Service not found: {service_id}")
+            return jsonify({"error": "Service not found"}), 404
+    except Exception as e:
+        logger.exception(f"get_service: Error retrieving service {service_id}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/services', methods=['GET'])
+def list_services():
+    logger.info("--- list_services: Received request ---")
+    try:
+        services = []
+        docs = db.collection('services').stream()
+        for doc in docs:
+            service = doc.to_dict()
+            service['id'] = doc.id # Include the document ID in the response
+            services.append(service)
+        logger.info(f"list_services: Retrieved {len(services)} services")
+        return jsonify(services), 200
+    except Exception as e:
+        logger.exception("list_services: Error listing services")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/services/<service_id>', methods=['PUT'])
+def update_service(service_id):
+    logger.info(f"--- update_service: Received request for ID: {service_id} ---")
+    try:
+        update_data = request.json
+        if not update_data:
+            logger.error("update_service: Request body must be JSON")
+            return jsonify({"error": "Request body must be JSON"}), 400
+
+        doc_ref = db.collection('services').document(service_id)
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            logger.warning(f"update_service: Service not found: {service_id}")
+            return jsonify({"error": "Service not found"}), 404
+
+        doc_ref.update(update_data)
+        logger.info(f"update_service: Service updated successfully: {service_id}")
+        return jsonify({"message": "Service updated successfully", "id": service_id}), 200
+    except Exception as e:
+        logger.exception(f"update_service: Error updating service {service_id}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/services/<service_id>', methods=['DELETE'])
+def delete_service(service_id):
+    logger.info(f"--- delete_service: Received request for ID: {service_id} ---")
+    try:
+        doc_ref = db.collection('services').document(service_id)
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            logger.warning(f"delete_service: Service not found: {service_id}")
+            return jsonify({"error": "Service not found"}), 404
+
+        doc_ref.delete()
+        logger.info(f"delete_service: Service deleted successfully: {service_id}")
+        return jsonify({"message": "Service deleted successfully", "id": service_id}), 204 # 204 No Content for successful deletion
+    except Exception as e:
+        logger.exception(f"delete_service: Error deleting service {service_id}")
+        return jsonify({"error": str(e)}), 500
+
+# --- Placeholder for booking operations (as in original file) ---
+
+# Placeholder for booking creation
+@app.route('/bookings', methods=['POST'])
+def create_booking():
+    data = request.json
+    logger.info(f"--- create_booking: Received request with data: {data} ---")
+    # TODO: Implement booking logic, validation, and Firestore interaction
+    return jsonify({"message": "Booking creation not yet implemented", "received_data": data}), 501
+
+# Placeholder for getting booking details
+@app.route('/bookings/<booking_id>', methods=['GET'])
+def get_booking(booking_id):
+    logger.info(f"--- get_booking: Received request for ID: {booking_id} ---")
+    # TODO: Implement fetching booking from Firestore
+    return jsonify({"message": f"Get booking {booking_id} not yet implemented"}), 501
+
+# Placeholder for updating booking
+@app.route('/bookings/<booking_id>', methods=['PUT'])
+def update_booking(booking_id):
+    data = request.json
+    logger.info(f"--- update_booking: Received request for ID: {booking_id} with data: {data} ---")
+    # TODO: Implement updating booking in Firestore
+    return jsonify({"message": f"Update booking {booking_id} not yet implemented", "received_data": data}), 501
+
+# Placeholder for deleting booking
+@app.route('/bookings/<booking_id>', methods=['DELETE'])
+def delete_booking(booking_id):
+    logger.info(f"--- delete_booking: Received request for ID: {booking_id} ---")
+    # TODO: Implement deleting booking from Firestore
+    return jsonify({"message": f"Delete booking {booking_id} not yet implemented"}), 501
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=8080)

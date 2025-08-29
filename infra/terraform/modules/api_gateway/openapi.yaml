@@ -1,0 +1,25 @@
+swagger: "2.0"
+info:
+  title: Salon API Gateway
+  version: 1.0.0
+schemes:
+  - https
+paths:
+  /core/health:
+    get:
+      operationId: getCoreHealth
+      x-google-backend:
+        address: "${backends["core-api"]}/health"
+      responses:
+        "200":
+          description: OK
+security:
+  - firebase: []
+securityDefinitions:
+  firebase:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: ""
+    x-google-issuer: "${firebase_jwt_issuer}"
+    x-google-audiences: "${firebase_jwt_audience}"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
